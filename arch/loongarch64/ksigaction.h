@@ -6,8 +6,8 @@
 struct k_sigaction {
 	void (*handler)(int);
 	unsigned long flags;
-	unsigned long mask[2];
 	void (*restorer)();
+	unsigned long mask[2];
 };
 
 hidden void __restore(), __restore_rt();

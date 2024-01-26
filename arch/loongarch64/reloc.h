@@ -33,11 +33,23 @@
 #define CRTJMP(pc,sp) __asm__ __volatile__( \
 	"move $sp,%1 ; jr %0" : : "r"(pc), "r"(sp) : "memory" )
 
+
+// NOTE: origin version can raise error when compile with -O flags
+// but -O2/3 without any problems. as following code:
+
+// #define GETFUNCSYM(fp, sym, got) __asm__ ( \
+// 	".hidden " #sym "\n" \
+// 	".align 8 \n" \
+// 	"	la.local $t1, "#sym" \n" \
+// 	"	or %0, $t1, $zero \n" \
+// 	: "=r"(*(fp)) : : "memory" )
+// #endif 
+
 #define GETFUNCSYM(fp, sym, got) __asm__ ( \
 	".hidden " #sym "\n" \
 	".align 8 \n" \
-	"	la.local $t1, "#sym" \n" \
-	"	or %0, $t1, $zero \n" \
+	"	la.local %0, "#sym" \n" \
+	"	or %0, %0, $zero \n" \
 	: "=r"(*(fp)) : : "memory" )
 
 #endif

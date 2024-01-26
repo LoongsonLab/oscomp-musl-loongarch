@@ -1,3 +1,3 @@
-#ifdef __loongarch64_soft_float
+#ifdef __loongarch_soft_float
 #include "../fenv.c"
 #endif

@@ -11,8 +11,8 @@ __clone:
 	# sys_clone(u64 flags, u64 ustack_base, u64 parent_tidptr, u64 child_tidptr, u64 tls)
 	or	$a0, $a2, $zero
 	or	$a2, $a4, $zero
-	or	$a3, $a6, $zero
-	or	$a4, $a5, $zero
+	or	$a3, $a5, $zero
+	or	$a4, $a6, $zero
 	ori	$a7, $zero, 220
 	syscall 0				# call clone
 
