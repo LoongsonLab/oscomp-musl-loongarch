@@ -6,7 +6,8 @@ static inline int a_ll(volatile int *p)
 	int v;
 	__asm__ __volatile__ (
 		"ll.w %0, %1"
-		: "=r"(v) : LLSC_M(*p));
+		: "=r"(v)
+		: "ZC"(*p));
 	return v;
 }
 
@@ -16,7 +17,8 @@ static inline int a_sc(volatile int *p, int v)
 	int r;
 	__asm__ __volatile__ (
 		"sc.w %0, %1"
-		: "=r"(r), "="LLSC_M(*p) : "0"(v) : "memory");
+		: "=r"(r), "=ZC"(*p)
+		: "0"(v) : "memory");
 	return r;
 }
 
@@ -26,7 +28,8 @@ static inline void *a_ll_p(volatile void *p)
 	void *v;
 	__asm__ __volatile__ (
 		"ll.d %0, %1"
-		: "=r"(v) : LLSC_M(*(void *volatile *)p));
+		: "=r"(v)
+		: "ZC"(*(void *volatile *)p));
 	return v;
 }
 
@@ -36,7 +39,9 @@ static inline int a_sc_p(volatile void *p, void *v)
 	long r;
 	__asm__ __volatile__ (
 		"sc.d %0, %1"
-		: "=r"(r), "="LLSC_M(*(void *volatile *)p) : "0"(v) : "memory");
+		: "=r"(r), "=ZC"(*(void *volatile *)p)
+		: "0"(v)
+		: "memory");
 	return r;
 }
 
